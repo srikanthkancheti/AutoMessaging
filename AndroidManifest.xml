@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.automessaging"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="19" />
+    
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />.
+    
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".SplashActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ProfileListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="Profiles"></activity>
+        
+        <activity android:name=".SettingsActivity"
+            android:label="Settings"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:parentActivityName="com.automessaging.ProfileActivity"
+            android:launchMode="singleTask"></activity>
+        
+        <activity android:name=".ProfileActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="Profile"
+            android:parentActivityName="com.automessaging.ProfileListActivity"></activity>
+        
+        <activity android:name=".ProfileSettingsActivity"
+            android:label="Profile Settings"
+            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
+        
+        <activity android:name=".TimeDurationActivity"
+            android:label="Profile Time"
+            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
+        
+        <activity android:name=".ReplyMsgActivity"
+            android:label="Reply Message"
+            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
+        
+        <activity android:name="com.automessaging.groups.GroupsActivity"
+            android:label="Groups"
+            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
+        
+        <activity android:name="com.automessaging.readContacts.ContactListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
+       
+        <activity android:name="com.automessaging.readContacts.SelectContactsActivity"
+            android:label="Select Contacts"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:parentActivityName="com.automessaging.readContacts.ContactListActivity"
+            android:windowSoftInputMode="stateHidden"></activity>
+        
+        <activity android:name="com.automessaging.HomeActivity"></activity>
+        <activity android:name="com.automessaging.schedule.ScheduleMessage"
+            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
+        
+        <service            
+            android:name=".MyAlarmService"            
+            android:enabled="true"            
+            android:exported="true" >        
+        </service>
+        
+		<receiver
+            android:name=".receivers.SilenceBroadcastReceiver"
+            android:process=":remote" >
+        </receiver>
+        <receiver
+            android:name=".receivers.UnsilenceBroadcastReceiver"
+            android:process=":remote" >
+        </receiver>
+        
+        <receiver 
+            android:name=".receivers.ScheduleSmsBroadcastReceiver">
+            
+        </receiver>
+        
+          <receiver android:name="com.automessaging.receivers.MyCallReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

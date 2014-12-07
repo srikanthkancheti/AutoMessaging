@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item android:id="@+id/action_new"
+          android:icon="@drawable/ic_action_new"
+          android:title="@string/new_group"
+          android:showAsAction="always" />
+    
+<!--     <item 
+    	  android:id="@+id/action_discard"
+          android:icon="@drawable/ic_action_discard"
+          android:title="@string/action_settings"
+          android:showAsAction="always"/> -->
+   
+    <item
+        android:id="@+id/action_select"
+        android:showAsAction="always"
+        android:title="Select"/>
+    <item
+        android:id="@+id/action_done"
+        android:showAsAction="always"
+        android:title="@string/done"/>
+  <!--   <item
+        android:id="@+id/action_ok"
+        android:showAsAction="always"
+        android:title="OK"/> -->
+
+</menu>

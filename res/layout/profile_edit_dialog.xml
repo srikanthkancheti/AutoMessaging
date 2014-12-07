@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/profile_dialog_rl"
+        android:layout_width="wrap_content"
+        android:layout_height="180dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="18dp"
+            android:text="Edit Your Profile Name."
+            android:textSize="17dp" 
+            android:textColor="#000000"/>
+
+        <EditText
+            android:id="@+id/profile_profileName_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView1"
+            android:layout_below="@+id/textView1"
+            android:layout_marginTop="14dp"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/profile_cancel_button"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignLeft="@+id/profile_profileName_editText"
+            android:layout_below="@+id/profile_profileName_editText"
+            android:layout_marginTop="21dp"
+            android:text="Cancel"
+            android:textColor="#000000"
+            android:background="#08F0FE"/>
+
+        <Button
+            android:id="@+id/profile_ok_button"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignBaseline="@+id/profile_cancel_button"
+            android:layout_alignBottom="@+id/profile_cancel_button"
+            android:layout_alignRight="@+id/profile_profileName_editText"
+            android:text="OK" 
+			android:textColor="#000000"
+			android:background="#08F0FE"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

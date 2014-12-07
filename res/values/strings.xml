@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Auto messaging</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="home_note">Note: If you have multiple profiles to start, make sure !</string>
+    <string name="settings_notification_tv">Show profile started notification icon in status bar.</string>
+    <string name="settings_prevent_abus_tv">Auto-response will be sent only once within 5-10 mins interval to same contact to prevent abusing.</string>
+	<string name="delete_note_yes">Yes</string>
+    <string name="delete_note_no">No</string>
+    <string name="delete">Delete</string>
+    <string name="done">Done</string>
+    <string name="new_group">New Group</string>
+</resources>

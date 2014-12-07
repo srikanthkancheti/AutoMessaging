@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/app_logo2">
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+        <RelativeLayout 
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent" >
+            
+            <LinearLayout 
+                android:id="@+id/linearLayout_profile_settings_general"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="#C0C0C0"
+                android:orientation="vertical">
+                <TextView 
+                    android:id="@+id/peofile_settings_tv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
+				    android:layout_alignParentTop="true"
+				    android:text="General"
+				    android:textSize="20dp"
+				    android:paddingLeft="5dp"
+				    android:textColor="#000000"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/general_linearlayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                
+                android:layout_below="@+id/linearLayout_profile_settings_general" >
+
+                <LinearLayout
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="5dp" >
+
+                    <TextView
+                        android:id="@+id/notify_sent_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Notify Message Sent"
+                        android:textColor="#DD2626"
+                        android:textSize="17dp"/>
+
+                    <TextView
+                        android:id="@+id/notify_sent_tv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="#ffffff"
+                        android:textSize="17dp"
+                        android:text="Notify after auto reply message is sent." />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/general_checkBox1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_gravity="center_vertical"
+                    />
+                
+            </LinearLayout>
+            <View
+                android:id="@+id/general_view_line1"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/general_linearlayout"
+                android:layout_marginTop="4dp"
+                android:background="#c0c0c0" />
+            
+            <LinearLayout
+                android:id="@+id/general2_linearlayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/general_view_line1"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/save_sent_message_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Save Sent Message"
+                        android:textColor="#DD2626"
+                        android:textSize="17dp"/>
+
+                    <TextView
+                        android:id="@+id/save_sent_message_tv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="#ffffff"
+                        android:textSize="17dp"
+                        android:text="Save sent message to system sms." />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/general_checkBox2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="4dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/general_view_line2"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/general2_linearlayout"
+                android:layout_marginTop="4dp"
+                android:background="#c0c0c0" />
+            
+             <LinearLayout
+                android:id="@+id/general3_linearlayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/general_view_line2"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="vertical" >
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout 
+                android:id="@+id/linearLayout_profile_settings_replyOption"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="#C0C0C0"
+                android:orientation="vertical"
+                android:layout_below="@+id/general3_linearlayout">
+                <TextView 
+                    android:id="@+id/peofile_settings_reply_tv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
+				    android:layout_alignParentTop="true"
+				    android:text="Reply Option"
+				    android:textColor="#000000"
+				    android:paddingLeft="5dp"
+				    android:textSize="20dp"/>
+            </LinearLayout>
+            
+            <LinearLayout
+                android:id="@+id/replyOption_linearlayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout_profile_settings_replyOption"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/reply_once_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Use Different Message"
+                        android:textColor="#DD2626"
+                        android:textSize="17dp"/>
+
+                    <TextView
+                        android:id="@+id/reply_once_tv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="#ffffff"
+                        android:textSize="17dp"
+                        android:text="Use different message for sms and missed call." />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/general_checkBox4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="4dp" />
+            </LinearLayout>
+        </RelativeLayout>
+        
+    </ScrollView>
+
+</RelativeLayout>

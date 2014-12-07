@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:id="@+id/groups_list_item">
+
+    <RelativeLayout
+        android:id="@+id/groups_relativeLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/border_shadow"
+        android:layout_alignParentTop="true" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="32dp"
+        android:src="@drawable/group_icon" />
+
+    <ImageView
+        android:id="@+id/group_checkbox_imageView"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="17dp"
+        android:src="@drawable/setting_check_box_bg" />
+
+    <LinearLayout
+        android:id="@+id/groups_listItem_groupName_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/imageView1"
+        android:layout_toLeftOf="@+id/group_checkbox_imageView"
+        android:layout_toRightOf="@+id/imageView1">
+
+        <TextView
+            android:id="@+id/groups_list_item_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Group Name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/font_color"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:paddingLeft="10dp" />
+
+    </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

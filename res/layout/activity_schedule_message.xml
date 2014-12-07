@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/app_logo2" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="412dp" 
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/schedule_message_rl"
+                android:layout_below="@+id/schedule_message_rl"
+                android:layout_marginTop="25dp"
+                android:text="Schedule Time:"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/schedule_cal_editText"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/schedule_cal_imageView"
+                android:layout_alignLeft="@+id/textView3"
+                android:background="@drawable/border_shadow"
+                android:ems="10"
+                android:inputType="date"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/schedele_phone_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border_shadow"
+                android:ems="10"
+                android:hint="To"
+                android:inputType="phone"
+                android:textColor="#FFFFFF" />
+
+            <RelativeLayout
+                android:id="@+id/schedule_message_rl"
+                android:layout_width="fill_parent"
+                android:layout_height="100dp"
+                android:layout_alignLeft="@+id/textView2"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/textView2"
+                android:background="@drawable/border_shadow" >
+
+                <EditText
+                    android:id="@+id/schedule_message_editText"
+                    android:layout_width="255dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:ems="10"
+                    android:inputType="textMultiLine"
+                    android:textColor="#FFFFFF" >
+
+                    <requestFocus />
+                </EditText>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/schedele_phone_editText"
+                android:layout_marginTop="20dp"
+                android:text="Message:"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/schedule_button"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="34dp"
+                android:background="@drawable/border_shadow"
+                android:text="Schedule"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/schedule_time_editText"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/schedule_cal_imageView"
+                android:layout_marginLeft="22dp"
+                android:layout_toRightOf="@+id/schedule_cal_imageView"
+                android:background="@drawable/border_shadow"
+                android:ems="10"
+                android:inputType="time"
+                android:paddingLeft="5dp"
+                android:textColor="#FFFFFF" />
+
+            <ImageView
+                android:id="@+id/schedule_time_imageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/schedule_cal_imageView"
+                android:paddingLeft="10dp"
+                android:src="@drawable/clock" />
+
+            <ImageView
+                android:id="@+id/schedule_cal_imageView"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_below="@+id/textView3"
+                android:layout_marginTop="16dp"
+                android:layout_toRightOf="@+id/schedule_cal_editText"
+                android:paddingLeft="10dp"
+                android:src="@drawable/calender" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

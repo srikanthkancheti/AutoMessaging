@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <RelativeLayout 
+        android:id="@+id/select_contact_rl"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent">
+		<!-- Editext for Search -->
+	    <EditText android:id="@+id/inputSearch"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:hint="Enter Name"
+	        android:inputType="text"/>
+	    <ListView
+	        android:id="@+id/select_contacts_listView"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/inputSearch"
+	        android:layout_alignParentLeft="true" >
+	
+	    </ListView>
+	
+	    <ImageView
+	        android:id="@+id/imageView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginRight="24dp"
+	        android:src="@drawable/ic_action_search" />
+    </RelativeLayout>
+    
+
+</RelativeLayout>

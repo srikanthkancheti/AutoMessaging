@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/app_logo2">
+
+    <Button
+        android:id="@+id/button_auto"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button_schedule"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="65dp"
+        android:background="@drawable/border_shadow"
+        android:text="Auto \nMessaging"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/button_schedule"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button_auto"
+        android:layout_centerVertical="true"
+        android:background="@drawable/border_shadow"
+        android:text="Schedule \nMessage"
+        android:textColor="#ffffff" />
+
+</RelativeLayout>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <ScrollView 
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
+    <RelativeLayout
+        android:id="@+id/home_dialog_rl"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true" 
+        android:background="@drawable/background">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="20dp"
+        android:text="Create Profile for AutoMessaging Application."
+        android:textSize="17dp" 
+        android:textColor="#000000"/>
+
+    <EditText
+        android:id="@+id/home_profileName_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignRight="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="18dp"
+        android:ems="10"
+        android:hint="Enter Profile Name">
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/home_cancel_button"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignLeft="@+id/home_profileName_editText"
+        android:layout_below="@+id/home_profileName_editText"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="22dp"
+        android:text="Cancel"
+        android:textColor="#000000"
+        android:background="#08F0FE"/>
+
+    <Button
+        android:id="@+id/home_ok_button"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignBaseline="@+id/home_cancel_button"
+        android:layout_alignBottom="@+id/home_cancel_button"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/home_cancel_button"
+        android:text="OK"
+        android:textColor="#000000"
+        android:textSize="17dp"
+        android:background="#08F0FE"/>
+
+    </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

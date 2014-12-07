@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/app_logo2">
+    
+    <RelativeLayout
+        android:id="@+id/selected_contacts_reply_message_rl"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp" >
+        
+         <LinearLayout
+                android:id="@+id/linearLayout_contacts_reply_message"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/font_color"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:paddingLeft="5dp"
+                    android:textSize="20dp"
+                    android:text="Reply message for this group"
+                    android:textColor="#000000"/>
+           
+       </LinearLayout>
+
+       <RelativeLayout
+           android:id="@+id/selected_contacts_reply_message_ll"
+           android:layout_width="fill_parent"
+           android:layout_height="60dp"
+           android:layout_alignParentLeft="true"
+           android:layout_below="@+id/linearLayout_contacts_reply_message"
+           android:background="@drawable/background" >
+
+           <EditText
+               android:id="@+id/groups_reply_editText"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentBottom="true"
+               android:layout_alignParentLeft="true"
+               android:layout_alignParentTop="true"
+               android:layout_toLeftOf="@+id/group_reply_template_imageView"
+               android:ems="10"
+               android:hint="Groups reply"
+               android:textColor="#ffffff" />
+
+           <ImageView
+               android:id="@+id/group_reply_template_imageView"
+               android:layout_width="20dp"
+               android:layout_height="20dp"
+               android:layout_alignParentBottom="true"
+               android:layout_alignParentRight="true"
+               android:layout_marginRight="16dp"
+               android:src="@drawable/add_icon" />
+
+       </RelativeLayout>
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/selected_contacts_rl"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:layout_above="@+id/selected_contacts_button"
+        android:layout_below="@+id/selected_contacts_reply_message_rl" >
+        <LinearLayout
+                android:id="@+id/linearLayout_selected_contacts"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/font_color"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:paddingLeft="5dp"
+                    android:textSize="20dp"
+                    android:text="Selected contacts for this group"
+                    android:textColor="#000000"/>
+           
+       </LinearLayout>
+
+	        <TextView 
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:id="@+id/selected_contacts_isEmpty_tv"
+	            android:layout_alignParentTop="true"
+	            android:layout_marginTop="20dp"
+	            android:textSize="15dp"
+	            android:textStyle="bold|italic"
+	            android:layout_marginLeft="20dp"
+	            android:textColor="#ffffff"
+	            android:paddingTop="10dp"
+	            android:text="Click on plus(+) button to add group contacts !"/>
+
+        <ListView
+            android:id="@+id/selected_contacts_listView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout_selected_contacts" >
+            
+        </ListView>
+        
+        </RelativeLayout>
+        <Button 
+            android:id="@+id/selected_contacts_button"
+            android:layout_height="50dp"
+            android:layout_width="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:text="OK"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:background="@drawable/border_shadow"/>
+        
+    
+</RelativeLayout>
