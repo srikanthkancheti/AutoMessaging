@@ -2,8 +2,11 @@ package com.automessaging.schedule;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 
 import com.automessaging.ProfileListActivity;
@@ -17,20 +20,39 @@ import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.WindowManager.LayoutParams;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.FilterQueryProvider;
+import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.MultiAutoCompleteTextView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class ScheduleMessage extends Activity{
 	
-	EditText phone_edt, message_edt;   
+	EditText message_edt;   
 	static EditText schedule_date_edt;
 	EditText schedule_time_edt;
 	ImageView cal_iv, time_iv;
@@ -39,6 +61,10 @@ public class ScheduleMessage extends Activity{
 	String formattedStartHour, formattedStartMinute, StartTime, formatedCurrentTime;
 	private Date startDate, stopDate, curDate;
 	private SimpleDateFormat dateFormater;
+	
+//	private ArrayList<Map<String, String>> mPeopleList;
+//    private SimpleAdapter mAdapter;
+    private MultiAutoCompleteTextView mAuto;
 	
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
@@ -58,7 +84,19 @@ public class ScheduleMessage extends Activity{
           formatedCurrentTime = format1.format(calendar.getTime());
           System.out.println("checking current date and time formatedCurrentTime.............."+formatedCurrentTime);
           
-		
+          //mAuto = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextViewTest);
+          ContentResolver content = getContentResolver();
+          Cursor cursor = content.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                  PEOPLE_PROJECTION, null, null, null);
+
+          ContactListAdapter adapter = new ContactListAdapter(this, cursor);
+          mAuto.setAdapter(adapter);
+          
+  		// specify the minimum type of characters before drop-down list is shown
+          mAuto.setThreshold(1);
+  		// comma to separate the different colors
+          mAuto.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+          
 		
 		cal_iv.setOnClickListener(new OnClickListener() {
 			
@@ -175,16 +213,88 @@ public class ScheduleMessage extends Activity{
 			});
 	}
 
+
+
 	private void initializeUi() {
 		// TODO Auto-generated method stub
 		schedule_btn = (Button) findViewById(R.id.schedule_button);
-		phone_edt = (EditText) findViewById(R.id.schedele_phone_editText);
+		mAuto = (MultiAutoCompleteTextView) findViewById(R.id.mmWhoNo);
 		message_edt = (EditText) findViewById(R.id.schedule_message_editText);
 		schedule_date_edt = (EditText) findViewById(R.id.schedule_cal_editText);
+		/**schedule_date_edt.setKeyListener(null); 
+		schedule_date_edt.setClickable(false); 
+		schedule_date_edt.setCursorVisible(false); 
+		schedule_date_edt.setFocusable(false); 
+		schedule_date_edt.setFocusableInTouchMode(false);
+		 above all do the same thing as EditText not editable*/
+		schedule_date_edt.setFocusableInTouchMode(false);
 		schedule_time_edt = (EditText) findViewById(R.id.schedule_time_editText);
+		schedule_time_edt.setFocusableInTouchMode(false);
 		cal_iv = (ImageView) findViewById(R.id.schedule_cal_imageView);
 		time_iv = (ImageView) findViewById(R.id.schedule_time_imageView);
 		
 		
 	}
+	
+	public static class ContactListAdapter extends CursorAdapter implements Filterable {
+        public ContactListAdapter(Context context, Cursor c) {
+            super(context, c);
+            mContent = context.getContentResolver();
+        }
+
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+             final LayoutInflater inflater = LayoutInflater.from(context);
+             
+             View retView = inflater.inflate(R.layout.schedule_msg_custcontview,parent,false);
+             return retView;
+
+        }        
+
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+            //((TextView) view).setText(cursor.getString(2));
+        	TextView pname = (TextView)view.findViewById(R.id.ccontName);
+            TextView pnum = (TextView)view.findViewById(R.id.ccontNo); 
+            pname.setText(cursor.getString(2));
+            pnum.setText(cursor.getString(1));
+
+        }
+
+        @Override
+        public String convertToString(Cursor cursor) {
+            return cursor.getString(2);
+        }
+
+        @Override
+        public Cursor runQueryOnBackgroundThread(CharSequence constraint) {
+            if (getFilterQueryProvider() != null) {
+                return getFilterQueryProvider().runQuery(constraint);
+            }
+
+            StringBuilder buffer = null;
+            String[] args = null;
+            if (constraint != null) {
+                buffer = new StringBuilder();
+            buffer.append("UPPER(");
+            buffer.append(ContactsContract.Contacts.DISPLAY_NAME);
+            buffer.append(") GLOB ?");
+                args = new String[] { constraint.toString().toUpperCase() + "*" };
+            }
+
+            return mContent.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, PEOPLE_PROJECTION,
+                    buffer == null ? null : buffer.toString(), args,
+                    null);
+        }
+
+
+
+        private ContentResolver mContent;           
+    }
+
+ private static final String[] PEOPLE_PROJECTION = new String[] {
+        ContactsContract.Contacts._ID,
+        ContactsContract.CommonDataKinds.Phone.NUMBER,
+        ContactsContract.Contacts.DISPLAY_NAME,
+    };
 }
