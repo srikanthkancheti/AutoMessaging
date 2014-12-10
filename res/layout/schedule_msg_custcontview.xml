@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+<TextView
+    android:id="@+id/ccontName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginLeft="16dp"
+    android:text="Large Text"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:textColor="#000000"
+    android:textSize="20dp" />
+
+<TextView
+    android:id="@+id/textView1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/ccontName"
+    android:layout_below="@+id/ccontName"
+    android:text="Num:"
+    android:textSize="15dp"
+    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+<TextView
+    android:id="@+id/ccontNo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignBottom="@+id/textView1"
+    android:layout_marginLeft="10dp"
+    android:layout_toRightOf="@+id/textView1"
+    android:text="Medium Text"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textColor="#000000"
+    android:textSize="15dp" />
+
+</RelativeLayout>

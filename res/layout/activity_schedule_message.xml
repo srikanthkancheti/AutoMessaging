@@ -38,19 +38,14 @@
                 android:inputType="date"
                 android:textColor="#FFFFFF" />
 
-            <EditText
-                android:id="@+id/schedele_phone_editText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/border_shadow"
-                android:ems="10"
-                android:hint="To"
-                android:inputType="phone"
-                android:textColor="#FFFFFF" />
+            <MultiAutoCompleteTextView
+                
+	             android:id="@+id/mmWhoNo"
+				 android:layout_width="fill_parent"
+				 android:layout_height="wrap_content"
+				 android:hint="To...." 
+				 android:textColor="#FFFFFF"
+				 android:background="@drawable/border_shadow"/>
 
             <RelativeLayout
                 android:id="@+id/schedule_message_rl"
@@ -79,7 +74,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/schedele_phone_editText"
+                android:layout_below="@+id/mmWhoNo"
                 android:layout_marginTop="20dp"
                 android:text="Message:"
                 android:textAppearance="?android:attr/textAppearanceMedium"
