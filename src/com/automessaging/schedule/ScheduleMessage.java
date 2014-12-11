@@ -36,6 +36,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager.LayoutParams;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
@@ -50,7 +53,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-public class ScheduleMessage extends Activity{
+public class ScheduleMessage extends Activity implements OnItemClickListener{
 	
 	EditText message_edt;   
 	static EditText schedule_date_edt;
@@ -61,10 +64,16 @@ public class ScheduleMessage extends Activity{
 	String formattedStartHour, formattedStartMinute, StartTime, formatedCurrentTime;
 	private Date startDate, stopDate, curDate;
 	private SimpleDateFormat dateFormater;
+	// Store contacts values in these arraylist
+		public static ArrayList<String> phoneValueArr = new ArrayList<String>();
+		public static ArrayList<String> nameValueArr = new ArrayList<String>();
+		String toNumberValue="";
+		
 	
 //	private ArrayList<Map<String, String>> mPeopleList;
 //    private SimpleAdapter mAdapter;
     private MultiAutoCompleteTextView mAuto;
+    Cursor cursor;
 	
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
@@ -84,19 +93,13 @@ public class ScheduleMessage extends Activity{
           formatedCurrentTime = format1.format(calendar.getTime());
           System.out.println("checking current date and time formatedCurrentTime.............."+formatedCurrentTime);
           
-          //mAuto = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextViewTest);
-          ContentResolver content = getContentResolver();
-          Cursor cursor = content.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                  PEOPLE_PROJECTION, null, null, null);
+          readContactData();
 
-          ContactListAdapter adapter = new ContactListAdapter(this, cursor);
-          mAuto.setAdapter(adapter);
-          
   		// specify the minimum type of characters before drop-down list is shown
           mAuto.setThreshold(1);
   		// comma to separate the different colors
           mAuto.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-          
+          mAuto.setOnItemClickListener(this);
 		
 		cal_iv.setOnClickListener(new OnClickListener() {
 			
@@ -215,6 +218,52 @@ public class ScheduleMessage extends Activity{
 
 
 
+	private void readContactData() {
+		// TODO Auto-generated method stub
+		
+		String phoneNumber = "";
+		String phoneName = "";
+		phoneValueArr.clear();
+		nameValueArr.clear();
+		
+		try{
+		
+		ContentResolver content = getContentResolver();
+		
+        cursor = content.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                PEOPLE_PROJECTION, null, null, null);
+        
+        if(null != cursor && cursor.moveToFirst()){
+        	do{
+        		// Get Phone number
+    			phoneNumber =""+cursor.getString(cursor
+    							.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+    			phoneName = cursor
+    					.getString(cursor
+    							.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+    			phoneValueArr.add(phoneNumber.toString());
+    			nameValueArr.add(phoneName.toString());
+        	}while(cursor.moveToNext());
+     
+        }
+        
+        //cursor.close();
+        
+		}catch(Exception e){
+			
+			Log.i("Read contacts data","Exception : "+ e);
+			
+		}finally {
+			//if (null != cursor)
+				//cursor.close();
+		}
+		
+		ContactListAdapter adapter = new ContactListAdapter(this, cursor);
+        mAuto.setAdapter(adapter);
+	}
+
+
+
 	private void initializeUi() {
 		// TODO Auto-generated method stub
 		schedule_btn = (Button) findViewById(R.id.schedule_button);
@@ -297,4 +346,29 @@ public class ScheduleMessage extends Activity{
         ContactsContract.CommonDataKinds.Phone.NUMBER,
         ContactsContract.Contacts.DISPLAY_NAME,
     };
+
+@Override
+public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	// TODO Auto-generated method stub
+	// Get Array index value for selected name
+    int i = nameValueArr.indexOf(""+parent.getItemAtPosition(position));
+  
+   // If name exist in name ArrayList
+   if (i >= 0) {
+       
+   	// Get Phone Number
+   	toNumberValue = phoneValueArr.get(i);
+   	
+   	InputMethodManager imm = (InputMethodManager) getSystemService(
+   		    INPUT_METHOD_SERVICE);
+   		imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+       // Show Alert		
+   	Toast.makeText(getBaseContext(), "Position:"+position+" Name:"+parent.getItemAtPosition(position)+" Number:"+toNumberValue,
+				Toast.LENGTH_LONG).show();
+   	
+   	Log.d("AutocompleteContacts", "Position:"+position+" Name:"+parent.getItemAtPosition(position)+" Number:"+toNumberValue);
+   	
+   }
+}
 }
