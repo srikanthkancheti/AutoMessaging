@@ -6,14 +6,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.TimeZone;
-
-import com.automessaging.ProfileListActivity;
-import com.automessaging.R;
-import com.automessaging.TimeDurationActivity;
-import com.automessaging.receivers.ScheduleSmsBroadcastReceiver;
-import com.automessaging.receivers.SilenceBroadcastReceiver;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -23,55 +21,51 @@ import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
-import android.widget.FilterQueryProvider;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.automessaging.R;
+import com.automessaging.database.ProfilesDatabaseHelper;
+import com.automessaging.receivers.ScheduleSmsBroadcastReceiver;
+
 public class ScheduleMessage extends Activity implements OnItemClickListener{
-	
+	ProfilesDatabaseHelper mDbHelper = new ProfilesDatabaseHelper(ScheduleMessage.this);
 	EditText message_edt;   
 	static EditText schedule_date_edt;
 	EditText schedule_time_edt;
 	ImageView cal_iv, time_iv;
 	Button schedule_btn;
 	private int year, month, day, hour, minute;
-	String formattedStartHour, formattedStartMinute, StartTime, formatedCurrentTime;
+	private String formattedStartHour, formattedStartMinute, StartTime, formatedCurrentTime, scheduleDateTime, scheduleMessage, enteredNumbers;
 	private Date startDate, stopDate, curDate;
 	private SimpleDateFormat dateFormater;
 	// Store contacts values in these arraylist
-		public static ArrayList<String> phoneValueArr = new ArrayList<String>();
-		public static ArrayList<String> nameValueArr = new ArrayList<String>();
-		String toNumberValue="";
+	public static ArrayList<String> phoneValueArr = new ArrayList<String>();
+	public static ArrayList<String> nameValueArr = new ArrayList<String>();
+	String toNumberValue="";
+	// hashMap with multiple values with default size and load factor
+	HashMap<String, ArrayList<String>> multiContactsMap = new HashMap<String, ArrayList<String>>();
+	// create an arrayList to store contact numbers
+	ArrayList<String> selectedContactsList = new ArrayList<String>();
 		
-	
-//	private ArrayList<Map<String, String>> mPeopleList;
-//    private SimpleAdapter mAdapter;
     private MultiAutoCompleteTextView mAuto;
     Cursor cursor;
 	
@@ -191,27 +185,93 @@ public class ScheduleMessage extends Activity implements OnItemClickListener{
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
+					scheduleMessage = message_edt.getText().toString();
 					
-					Date SmsScheduleTime = null;
-					String scheduleDateTime = schedule_date_edt.getText()+" "+schedule_time_edt.getText().toString();
-					Calendar smsScheduleCalendar = Calendar.getInstance();
-					SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
-					try {
-						SmsScheduleTime = dateFormater.parse(scheduleDateTime);
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					if(SmsScheduleTime!= null){
-						smsScheduleCalendar.setTime(SmsScheduleTime);
-					}
+					saveSelectedContacts();
 					
-					Intent scheduleReceiverIntent = new Intent(ScheduleMessage.this, ScheduleSmsBroadcastReceiver.class);
-					AlarmManager am = (AlarmManager) ScheduleMessage.this.getSystemService(ALARM_SERVICE);
-					PendingIntent ScheduleSmsSPI = PendingIntent.getBroadcast(ScheduleMessage.this, 1,scheduleReceiverIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-					am.set(AlarmManager.RTC_WAKEUP,smsScheduleCalendar.getTimeInMillis(), ScheduleSmsSPI);
-					Log.v(this.getClass().getName(),"check..profile Schedule calender :  "+smsScheduleCalendar.getTime());
-					finish();
+					//finish();
+				}
+
+				private void saveSelectedContacts() {
+					// TODO Auto-generated method stub
+					String[] str = mAuto.getText().toString().split(", ");
+					 List<String> values = null;
+					 Date SmsScheduleTime = null;
+					if(str.length > 0){
+					
+						for(int i=0; i<str.length; i++) {
+							
+							if(multiContactsMap.containsKey(str[i])){
+								
+								// Get a set of the entries
+							    Set<Entry<String, ArrayList<String>>> setMap = multiContactsMap.entrySet();
+							    // Get an iterator
+							    Iterator<Entry<String,  ArrayList<String>>> iteratorMap = setMap.iterator();
+							    
+							    System.out.println("\n HashMap with Multiple contact numbers");
+							    // display all the elements
+							    while(iteratorMap.hasNext()) {
+							    	Map.Entry<String, ArrayList<String>> entry = 
+							    			(Map.Entry<String, ArrayList<String>>) iteratorMap.next();
+							        String key = entry.getKey();
+							        values = entry.getValue();
+							        System.out.println("Key = '" + key + "' has values: " + values);
+							        
+							     // retrieving data from string list array in for loop
+							        for (int j=0;j < values.size();j++)
+							        {
+							        	enteredNumbers = values.get(j)+",";
+							        }
+							        //enteredNumbers = values.toString();
+							    }
+								
+							}else{
+								//store the entered numbers in database
+								enteredNumbers = str[i]+", ";
+							}
+						}
+				}else{
+					Toast.makeText(getApplicationContext(), "please enter a phone number to schedule message.", Toast.LENGTH_LONG).show();
+				}
+				
+					if(scheduleMessage.length() > 0){
+						
+						if(schedule_date_edt.getText().length() > 0){
+							
+							if(schedule_time_edt.getText().length() > 0){
+								
+								scheduleDateTime = schedule_date_edt.getText()+" "+schedule_time_edt.getText().toString();
+								Calendar smsScheduleCalendar = Calendar.getInstance();
+								SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
+								try {
+									SmsScheduleTime = dateFormater.parse(scheduleDateTime);
+								} catch (ParseException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								if(SmsScheduleTime!= null){
+									smsScheduleCalendar.setTime(SmsScheduleTime);
+								}
+								
+								Intent scheduleReceiverIntent = new Intent(ScheduleMessage.this, ScheduleSmsBroadcastReceiver.class);
+								AlarmManager am = (AlarmManager) ScheduleMessage.this.getSystemService(ALARM_SERVICE);
+								PendingIntent ScheduleSmsSPI = PendingIntent.getBroadcast(ScheduleMessage.this, 1,scheduleReceiverIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+								am.set(AlarmManager.RTC_WAKEUP,smsScheduleCalendar.getTimeInMillis(), ScheduleSmsSPI);
+								Log.v(this.getClass().getName(),"check..profile Schedule calender :  "+smsScheduleCalendar.getTime());
+								
+								mDbHelper.executeSQL("INSERT INTO ScheduleMessageDetails (Numbers, ScheduleTime, ScheduleMessage) VALUES ('"+enteredNumbers+"', '"+scheduleDateTime+"', '"+scheduleMessage+"')");
+								
+								Toast.makeText(getApplicationContext(), "Message Scheduled.", Toast.LENGTH_LONG).show();
+								finish();
+							}else{
+								Toast.makeText(getApplicationContext(), "Please select a time", Toast.LENGTH_LONG).show();
+							}
+						}else{
+							Toast.makeText(getApplicationContext(), "Please select a date", Toast.LENGTH_LONG).show();
+						}
+					}else{
+						Toast.makeText(getApplicationContext(), "Please enter a message to schedule", Toast.LENGTH_LONG).show();
+					}
 				}
 			});
 	}
@@ -236,11 +296,8 @@ public class ScheduleMessage extends Activity implements OnItemClickListener{
         if(null != cursor && cursor.moveToFirst()){
         	do{
         		// Get Phone number
-    			phoneNumber =""+cursor.getString(cursor
-    							.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-    			phoneName = cursor
-    					.getString(cursor
-    							.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+    			phoneNumber =""+cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+    			phoneName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
     			phoneValueArr.add(phoneNumber.toString());
     			nameValueArr.add(phoneName.toString());
         	}while(cursor.moveToNext());
@@ -350,25 +407,29 @@ public class ScheduleMessage extends Activity implements OnItemClickListener{
 @Override
 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 	// TODO Auto-generated method stub
-	// Get Array index value for selected name
-    int i = nameValueArr.indexOf(""+parent.getItemAtPosition(position));
-  
-   // If name exist in name ArrayList
-   if (i >= 0) {
-       
-   	// Get Phone Number
-   	toNumberValue = phoneValueArr.get(i);
+
+	TextView temp = (TextView) view.findViewById(R.id.ccontNo);
+	TextView temp2 = (TextView) view.findViewById(R.id.ccontName);
+    final String selectedNumber = temp.getText().toString();
+    final String selectedName = temp2.getText().toString();
+    
+   if (selectedNumber != null) {
    	
    	InputMethodManager imm = (InputMethodManager) getSystemService(
    		    INPUT_METHOD_SERVICE);
    		imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 
-       // Show Alert		
-   	Toast.makeText(getBaseContext(), "Position:"+position+" Name:"+parent.getItemAtPosition(position)+" Number:"+toNumberValue,
-				Toast.LENGTH_LONG).show();
+   	Log.d("Autocomplete selected Contact: ", " Name:"+selectedName+" Number:"+selectedNumber);
    	
-   	Log.d("AutocompleteContacts", "Position:"+position+" Name:"+parent.getItemAtPosition(position)+" Number:"+toNumberValue);
+   	if(multiContactsMap.containsKey(selectedName) && multiContactsMap.containsValue(selectedNumber)){
+   		
+   		Toast.makeText(getApplicationContext(), "Contact already selected", Toast.LENGTH_LONG).show();
+   	}else{
+   		
+   		selectedContactsList.add(selectedNumber);
+   		multiContactsMap.put(selectedName, selectedContactsList);
+   	}
    	
    }
-}
+ }
 }

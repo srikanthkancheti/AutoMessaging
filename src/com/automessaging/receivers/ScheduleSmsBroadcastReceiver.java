@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.telephony.gsm.SmsManager;
 import android.util.Log;
-import android.widget.Toast;
 
 public class ScheduleSmsBroadcastReceiver extends BroadcastReceiver{
 

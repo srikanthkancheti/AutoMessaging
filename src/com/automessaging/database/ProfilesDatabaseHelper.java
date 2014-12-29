@@ -64,6 +64,7 @@ public class ProfilesDatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(" CREATE TABLE ReplyMessagesTable (_Id  INTEGER primary key autoincrement, ProfileName varchar(50), Message varchar(120) NOT NULL);");
 		db.execSQL(" CREATE TABLE GroupsTable (_Id  INTEGER primary key autoincrement, GroupName varchar(50), GroupReplyMessage varchar(120), ContactName varchar(50), PhoneNumber varchar(50));");
 		db.execSQL(" CREATE TABLE GroupDetails (_Id  INTEGER primary key autoincrement, GroupName varchar(50), Message varchar(120), PhoneNumber varchar(50));");
+		db.execSQL(" CREATE TABLE ScheduleMessageDetails (_Id INTEGER primary key autoincrement, Numbers varchar(200), ScheduleTime varchar(50), ScheduleMessage varchar(200));");
 		Log.v("DataBaseHelper Class", "Table Created");
 	}
 
@@ -394,6 +395,11 @@ public class ProfilesDatabaseHelper extends SQLiteOpenHelper {
 		String GET_ROW_COUNT = "SELECT count(PhoneNumber) FROM GroupDetails Where Groupname= '"+groupName+"';";
 		int Count = (int) database.compileStatement(GET_ROW_COUNT).simpleQueryForLong();
 		return Count;
+	}
+
+	public void DeleteSentScheduleMessageDetails(int iD) {
+		// TODO Auto-generated method stub
+		database.execSQL("DELETE  FROM ScheduleMessageDetails WHERE _Id = '"+iD+ "'");
 	}
 
 
